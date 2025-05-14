@@ -5,7 +5,47 @@ app = Flask(__name__)
 
 # -------- BANCO DE DADOS --------
 def conectar():
-    return sqlite3.connect("database.db")
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+    return conn, cursor
+
+def criar_tabelas():
+    conn, cursor = conectar()
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS residuos (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome TEXT,
+            tipo TEXT,
+            risco TEXT,
+            instrucoes TEXT
+        )
+    """)
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS empresas (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome TEXT,
+            cnpj TEXT,
+            licenca TEXT,
+            telefone TEXT,
+            email TEXT
+        )
+    """)
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS descartes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            data TEXT,
+            peso REAL,
+            id_residuo INTEGER,
+            id_empresa INTEGER,
+            FOREIGN KEY (id_residuo) REFERENCES residuos(id),
+            FOREIGN KEY (id_empresa) REFERENCES empresas(id)
+        )
+    """)
+    conn.commit()
+    conn.close()
+
+# Cria as tabelas se não existirem
+criar_tabelas()
 
 # -------- ROTA INICIAL --------
 @app.route('/')
@@ -83,6 +123,11 @@ def relatorios():
     """).fetchone()
     conn.close()
     return render_template('relatorios.html', total_residuos=total_residuos, total_kg=total_kg, empresa=empresa_frequente)
+
+# -------- ROTA DE LOGIN --------
+@app.route('/login', methods=['POST'])
+def login():
+    return redirect('/dashboard')
 
 # -------- INICIAR SERVIDOR --------
 if __name__ == '__main__':
