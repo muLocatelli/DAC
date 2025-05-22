@@ -1,113 +1,159 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8">
     <title>Login - MedCycle</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='style.css') }}"
-    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f0f4f8;
-        text-align: center;
-        padding: 40px;
-      }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-      .container {
-        background-color: white;
-        padding: 40px;
-        border-radius: 10px;
-        max-width: 600px;
-        margin: auto;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      }
+        body {
+            display: flex;
+            height: 100vh;
+        }
 
-      h1 {
-        color: #2c3e50;
-      }
+        .left-side {
+            flex: 1;
+            background-color: #f5f3ec;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center; /* Centralizar o conteúdo */
+        }
 
-      .logo {
-        width: 200px;
-        margin-bottom: 30px;
-      }
+        .medcycle-logo {
+            max-width: 350px; /* Aumentei um pouco o tamanho da logo */
+            margin-bottom: 20px; /* Aumentei um pouco a margem inferior */
+        }
 
-      .social-login {
-        margin-top: 30px;
-      }
+        .description {
+            font-weight: 600;
+            color: #2e7d32;
+        }
 
-      .logos {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 20px;
-      }
+        .right-side {
+            flex: 1;
+            background-color: #2e7d32;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 40px;
+        }
 
-      .social-icon {
-        width: 60px;
-        height: auto;
-        cursor: pointer;
-        transition: transform 0.2s;
-      }
+        form {
+            width: 100%;
+            max-width: 350px;
+        }
 
-      .social-icon:hover {
-        transform: scale(1.1);
-      }
+        form label {
+            display: block;
+            margin: 10px 0 5px;
+        }
 
-      .footer {
-        margin-top: 40px;
-        font-size: 14px;
-        color: #888;
-      }
+        form input[type="text"],
+        form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #f0ece1;
+        }
+
+        form .actions {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9em;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        button {
+            margin-top: 15px;
+            width: 100%;
+            padding: 10px;
+            background-color: #4caf50;
+            border: none;
+            color: white;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .social-icons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .social-icons img {
+            width: 32px;
+        }
+
+        .footer-logo {
+            margin-top: 40px;
+        }
+
+        .footer-logo img {
+            width: 100px;
+        }
     </style>
-  </head>
-  <body>
-    <div class="container">
-      <img
-        src="{{ url_for('static', filename='LogoMedCycle.png') }}"
-        alt="Logo MedCycle"
-        class="logo"
-      />
-      <h1>Bem-vindo ao MedCycle</h1>
-      <p>Faça login usando uma das opções abaixo:</p>
-
-      <div class="social-login">
-        <div class="logos">
-          <a href="/dashboard">
-            <img
-              src="{{ url_for('static', filename='LogoGoogle.png') }}"
-              alt="Google"
-              class="social-icon"
-            />
-          </a>
-          <a href="/dashboard">
-            <img
-              src="{{ url_for('static', filename='LogoSiia.png') }}"
-              alt="Siia"
-              class="social-icon"
-            />
-          </a>
-          <a href="/dashboard">
-            <img
-              src="{{ url_for('static', filename='LogoGov.png') }}"
-              alt="GOV.BR"
-              class="social-icon"
-            />
-          </a>
-          <a href="/dashboard">
-            <img
-              src="{{ url_for('static', filename='LogoFacebook.png') }}"
-              alt="Facebook"
-              class="social-icon"
-            />
-          </a>
-        </div>
-      </div>
-
-      <div class="footer">
-        &copy; 2025 MedCycle - Projeto acadêmico demonstrativo
-      </div>
+</head>
+<body>
+    <div class="left-side">
+        <img src="{{ url_for('static', filename='MedCycle.png') }}" alt="MedCycle logo" class="medcycle-logo">
+        <p class="description">Gerenciamento de Descarte de Resíduos Médicos</p>
     </div>
-  </body>
+    <div class="right-side">
+        <h2>SEJA BEM-VINDO</h2>
+        {% if erro_login %}
+            <p style="color: red;">{{ erro_login }}</p>
+        {% endif %}
+        <form method="POST" action="/login">
+            <label for="usuario">Usuário</label>
+            <input type="text" id="usuario" name="usuario" required>
+
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" name="senha" required>
+
+            <div class="actions">
+                <div class="checkbox-container">
+                    <input type="checkbox" id="manter" name="manter">
+                    <label for="manter">Mantenha-me conectado</label>
+                </div>
+                <a href="/esqueci-senha" style="color: white; text-decoration: underline;">Esqueci a senha</a>
+            </div>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <p style="margin-top: 10px;"><a href="/cadastro" style="color: white; text-decoration: underline;">Não possui login? Cadastre-se!</a></p>
+
+        <div class="social-icons">
+            <img src="{{ url_for('static', filename='facebook_logo.png') }}" alt="Facebook">
+            <img src="{{ url_for('static', filename='google_logo.png') }}" alt="Google">
+            <img src="{{ url_for('static', filename='siis.png') }}" alt="SIIS">
+            <img src="{{ url_for('static', filename='govbr.png') }}" alt="Gov.br">
+        </div>
+
+        <div class="footer-logo">
+            <img src="{{ url_for('static', filename='ucdb_logo.png') }}" alt="UCDB">
+        </div>
+    </div>
+</body>
 </html>

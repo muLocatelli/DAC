@@ -7,11 +7,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         body {
-            font-family: sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            padding-top: 60px;
-            background-color: #f8f9fa;
+            padding-top: 70px;
+            background-color: #f0f8f5 !important; /* Verde bem claro básico */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
+
         .top-bar {
             background-color: #28a745;
             color: white;
@@ -25,58 +29,95 @@
             justify-content: space-between;
             align-items: center;
         }
+
         .top-bar-left {
             display: flex;
             align-items: center;
         }
+
         .top-bar-left a:first-child {
             margin-right: 20px;
             font-weight: bold;
-            font-size: 1.2em;
-        }
-        .top-bar a {
+            font-size: 1.3em;
             color: white;
             text-decoration: none;
-            margin-right: 15px;
         }
+
+        .top-bar-middle {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .profile-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .top-bar-right a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+        }
+
+        .top-bar-right a:hover {
+            color: #d4edda;
+        }
+
         .dashboard-options {
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: row; /* Alinha os itens horizontalmente */
             justify-content: center;
-            margin-top: 30px;
+            margin-top: 40px;
+            padding: 20px;
         }
+
         .option-card {
-            width: 180px;
-            height: 150px; /* Aumentei a altura para o ícone */
-            background-color: #28a745;
-            color: white;
-            border-radius: 10px;
-            margin: 10px;
+            width: 200px; /* Aumentei a largura */
+            height: 160px;
+            background-color: white;
+            color: #28a745;
+            border-radius: 15px;
+            margin: 15px;
             display: flex;
-            flex-direction: column; /* Para alinhar ícone e texto verticalmente */
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             text-decoration: none;
-            font-size: 1.1em;
+            font-size: 1.1em; /* Aumentei a fonte */
             font-weight: bold;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Adiciona uma leve sombra */
-            transition: transform 0.2s ease-in-out; /* Adiciona uma pequena animação ao passar o mouse */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease-in-out;
+            border: 1px solid #e0e0e0;
         }
+
         .option-card:hover {
-            transform: scale(1.05); /* Pequeno efeito de zoom ao passar o mouse */
-            background-color: #1e7e34;
+            transform: scale(1.05);
+            background-color: #f8f9fa;
         }
+
         .option-card i {
-            font-size: 2em; /* Tamanho do ícone */
-            margin-bottom: 10px; /* Espaço entre o ícone e o texto */
+            font-size: 3em;
+            margin-bottom: 10px;
         }
+
         .container {
-            padding-top: 20px;
-            text-align: center; /* Centraliza o título */
+            text-align: center;
+            margin-top: 30px;
+            width: 100%;
         }
+
         .container h2 {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            color: #343a40;
         }
     </style>
 </head>
@@ -84,9 +125,16 @@
     <div class="top-bar">
         <div class="top-bar-left">
             <a href="/dashboard">MedCycle</a>
-            <a href="/dashboard">Início</a>
         </div>
-        <a href="/">Sair</a>
+        <div class="top-bar-middle">
+            <div class="profile-icon">
+                <img src="{{ url_for('static', filename='perfil.png') }}" alt="Perfil">
+            </div>
+        </div>
+        <div class="top-bar-right">
+            <a href="#">Fale Conosco</a>
+            <a href="/">Sair</a>
+        </div>
     </div>
 
     <div class="container">
