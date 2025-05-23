@@ -247,6 +247,11 @@ def relatorios():
 def perfil():
     return render_template("perfil.html")
 
+# -------- NOVA ROTA PARA FALE CONOSCO --------
+@app.route("/fale_conosco") # A rota agora corresponde ao nome do arquivo com underscore
+def fale_conosco():
+    return render_template("fale_conosco.html") # Renderiza o arquivo com underscore
+
 # -------- INICIAR SERVIDOR --------
 if __name__ == "__main__":
     app.run(debug=True)
