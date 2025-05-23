@@ -1,45 +1,251 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>Cadastrar Resíduo</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>MedCycle - Cadastrar Resíduo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" xintegrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding-top: 70px; /* Espaço para a barra superior fixa */
+            background-image: url('{{ url_for('static', filename='background.png') }}'); /* Imagem de fundo: background.png */
+            background-size: cover; /* Garante que a imagem cubra toda a área */
+            background-repeat: no-repeat; /* Evita que a imagem se repita */
+            background-position: center center; /* Centraliza a imagem */
+            background-attachment: fixed; /* Fixa a imagem de fundo ao rolar */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh; /* Garante que o body ocupe toda a altura da viewport */
+            overflow: hidden; /* Esconde qualquer transbordamento */
+            position: relative;
+        }
+
+        /* Top bar */
+        .top-bar {
+            background-color: transparent; /* Fundo transparente */
+            color: white;
+            padding: 10px 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000; /* Garante que fique acima de tudo */
+            display: flex;
+            justify-content: space-between; /* Espaça os itens para esquerda e direita */
+            align-items: center;
+        }
+
+        .top-bar-left a { /* Estilo para o link MedCycle */
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+        }
+
+        .top-bar-left img { /* Estilo para a imagem da logo MedCycle */
+            height: 90px; /* Ajuste a altura conforme necessário */
+            width: auto;
+        }
+
+        .top-bar-right { /* Container para o botão Sair */
+            display: flex;
+            align-items: center;
+        }
+
+        /* Botão Sair - Posicionado na parte superior direita da top-bar */
+        .logout-button-top {
+            background-color: #dc3545; /* Vermelho para sair */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            text-decoration: none;
+        }
+
+        .logout-button-top:hover {
+            background-color: #c82333;
+        }
+
+        /* Removido o .main-content-wrapper pois não é mais necessário */
+
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 50px; /* Aumentado o padding interno do container */
+            margin-top: 50px; /* Ajustado a margem superior para centralizar melhor */
+            width: 90%; /* Aumentei a largura para melhor visualização */
+            max-width: 800px; /* Aumentei o max-width para telas maiores */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Removido .image-display e .image-display img */
+
+        h2 {
+            color: #343a40;
+            margin-bottom: 40px;
+            font-weight: bold;
+            text-align: center;
+            width: 100%;
+        }
+
+        form {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: bold;
+            font-size: 1.05em;
+        }
+
+        .form-control, .form-select, textarea {
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1.05em;
+            background-color: #f9f9f9;
+            color: #555;
+        }
+
+        .form-control:focus, .form-select:focus, textarea:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 5px rgba(40, 167, 69, 0.2);
+            outline: none;
+        }
+
+        .btn-success {
+            background-color: #28a745; /* Verde MedCycle para o botão salvar */
+            border-color: #28a745;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            width: fit-content;
+            margin: 40px auto 0 auto;
+            display: block;
+        }
+
+        .btn-success:hover {
+            background-color: #218838; /* Tom mais escuro no hover */
+            border-color: #218838;
+        }
+
+        /* Media queries para responsividade */
+        @media (min-width: 768px) {
+            form {
+                grid-template-columns: 1fr 1fr;
+                gap: 25px 50px;
+            }
+            .form-group.full-width {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @media (max-width: 767px) {
+            body {
+                padding-top: 10px;
+            }
+            .container {
+                padding: 25px;
+                margin-top: 25px;
+                width: 95%;
+            }
+            .top-bar {
+                padding: 10px;
+            }
+            .top-bar-left img {
+                height: 60px;
+            }
+            .logout-button-top {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+            h2 {
+                margin-bottom: 25px;
+            }
+            form {
+                gap: 20px;
+            }
+            .btn-success {
+                padding: 12px 25px;
+                font-size: 1.1em;
+                margin-top: 30px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container mt-4">
-    <h2>Cadastrar Novo Resíduo</h2>
-    <form action="/cadastro-residuo" method="POST">
-      <div class="mb-3">
-        <label class="form-label">Nome do Resíduo</label>
-        <input type="text" name="nome" class="form-control" required>
-      </div>
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <a href="/dashboard">
+                <img src="{{ url_for('static', filename='MedCycle.png') }}" alt="MedCycle Logo">
+            </a>
+        </div>
+        <div class="top-bar-right">
+            <a href="/" class="logout-button-top">Sair</a>
+        </div>
+    </div>
 
-      <div class="mb-3">
-        <label class="form-label">Tipo</label>
-        <select name="tipo" class="form-select" required>
-          <option>Infectante</option>
-          <option>Perfurocortante</option>
-          <option>Químico</option>
-          <option>Reciclável</option>
-        </select>
-      </div>
+    <div class="container">
+        <h2>Cadastrar Novo Resíduo</h2>
+        <form action="/cadastro-residuo" method="POST">
+            <div class="form-group">
+                <label for="nome">Nome do Resíduo:</label>
+                <input type="text" id="nome" name="nome" class="form-control" required>
+            </div>
 
-      <div class="mb-3">
-        <label class="form-label">Classificação de Risco</label>
-        <select name="risco" class="form-select" required>
-          <option>Baixo</option>
-          <option>Médio</option>
-          <option>Alto</option>
-        </select>
-      </div>
+            <div class="form-group">
+                <label for="tipo">Tipo:</label>
+                <select id="tipo" name="tipo" class="form-select" required>
+                    <option>Infectante</option>
+                    <option>Perfurocortante</option>
+                    <option>Químico</option>
+                    <option>Reciclável</option>
+                </select>
+            </div>
 
-      <div class="mb-3">
-        <label class="form-label">Instruções de Descarte</label>
-        <textarea name="instrucoes" class="form-control" rows="3" required></textarea>
-      </div>
+            <div class="form-group">
+                <label for="risco">Classificação de Risco:</label>
+                <select id="risco" name="risco" class="form-select" required>
+                    <option>Baixo</option>
+                    <option>Médio</option>
+                    <option>Alto</option>
+                </select>
+            </div>
 
-      <button type="submit" class="btn btn-success">Salvar</button>
-    </form>
-  </div>
+            <div class="form-group full-width">
+                <label for="instrucoes">Instruções de Descarte:</label>
+                <textarea id="instrucoes" name="instrucoes" class="form-control" rows="4" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-success">Salvar</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
