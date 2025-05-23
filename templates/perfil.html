@@ -9,107 +9,117 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            padding-top: 70px; /* Espaço para a barra superior */
-            background-color: #f0f8f5; /* Verde bem claro básico, consistente com o dashboard */
+            padding-top: 70px; /* Adjust top padding for the top bar spacing */
+            background-image: url('{{ url_for('static', filename='background.png') }}'); /* Background image */
+            background-size: cover; /* Ensures the image covers the entire area */
+            background-repeat: no-repeat; /* Prevents the image from repeating */
+            background-position: center center; /* Centers the image */
+            background-attachment: fixed; /* Fixes the background image when scrolling */
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh; /* Garante que o body ocupe toda a altura da viewport */
+            min-height: 100vh; /* Ensures the body occupies the full viewport height */
+            overflow: hidden; /* Kept for safety */
+            position: relative; /* Kept for safety */
         }
 
+        /* Top bar */
         .top-bar {
-            background-color: #28a745; /* Verde MedCycle */
+            background-color: transparent; /* Transparent background */
             color: white;
             padding: 10px 20px;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            z-index: 1000;
+            z-index: 1000; /* Ensures it stays on top of everything */
             display: flex;
-            justify-content: space-between;
+            justify-content: space-between; /* Spaces items to the left and right */
             align-items: center;
         }
 
-        .top-bar-left {
-            display: flex;
-            align-items: center;
-        }
-
-        .top-bar-left a {
-            color: white;
+        .top-bar-left a { /* Style for the MedCycle link (now image) */
+            color: white; /* Text color, but now for the link containing the image */
             text-decoration: none;
             font-weight: bold;
-            font-size: 1.3em; /* Tamanho maior para o nome do app */
+            font-size: 1.3em; /* Font size, but now for the link containing the image */
+            display: flex; /* Use flex to align image if needed */
+            align-items: center;
         }
 
-        .top-bar-right {
+        .top-bar-left img { /* Style for the MedCycle logo image */
+            height: 90px; /* Adjust height as needed - Increased from 80px */
+            width: auto; /* Maintain aspect ratio */
+        }
+
+        .top-bar-right { /* Container for the Logout button */
             display: flex;
             align-items: center;
         }
 
-        .top-bar-right a {
+        /* Logout button - Positioned on the top right of the top-bar */
+        .logout-button-top {
+            background-color: #dc3545; /* Red for logout */
             color: white;
-            text-decoration: none;
-            margin-left: 15px;
-            font-size: 1.1em;
+            border: none;
+            padding: 10px 20px; /* Increased padding for the button */
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em; /* Increased font size */
+            text-decoration: none; /* Removes underline from the link */
         }
 
-        .top-bar-right a:hover {
-            color: #d4edda;
+        .logout-button-top:hover {
+            background-color: #c82333;
         }
 
         .container {
-            background-color: white;
+            background-color: white; /* Main container remains white */
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            margin-top: 20px;
-            width: 90%; /* Aumentei a largura para melhor visualização */
-            max-width: 800px; /* Max-width para telas maiores */
+            padding: 40px; /* Increased inner padding of the container */
+            margin-top: 30px; /* Increased top margin for more space */
+            width: 98%; /* Increased width for better viewing */
+            max-width: 1050px; /* Increased max-width for larger screens */
             display: flex;
             flex-direction: column;
             align-items: center;
-            position: relative; /* Para posicionar o botão de sair dentro do container */
+            position: relative; /* Required to position the logout button within the container */
+            z-index: 1; /* Ensures the container stays above other elements if added */
         }
 
         .profile-header {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 30px;
-            width: 100%; /* Ocupa a largura total para centralizar */
+            margin-bottom: 40px; /* Increased spacing below the profile header */
+            width: 100%; /* Occupies full width to center */
         }
 
         .profile-icon-bg {
-            background-color: #e0e0e0; /* Fundo cinza claro para o ícone */
-            width: 120px; /* Aumentei o tamanho do círculo */
-            height: 120px;
+            background-color: #e0e0e0; /* Light gray background for the icon */
+            width: 180px; /* Increased size */
+            height: 180px; /* Increased size */
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             margin-bottom: 15px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            overflow: hidden; /* Ensures the image is cropped to the circle */
         }
 
-        .profile-icon {
-            width: 90px; /* Tamanho do ícone de pessoa */
-            height: 90px;
-            background-color: #c0c0c0; /* Cor do ícone genérico */
-            border-radius: 50%;
-            /* Usando um ícone Font Awesome para a pessoa */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 4em; /* Tamanho do ícone */
-            color: #888; /* Cor do ícone */
+        .profile-image { /* New class for the profile image */
+            width: 100%; /* Image fills the background circle */
+            height: 100%;
+            object-fit: cover; /* Ensures the image covers the area without distortion */
+            border-radius: 50%; /* Ensures the image itself is circular */
         }
 
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px 30px; /* Aumentei o espaçamento */
+            gap: 25px 40px; /* Increased spacing between fields */
             width: 100%;
         }
 
@@ -119,27 +129,29 @@
         }
 
         .form-group label {
-            margin-bottom: 8px; /* Espaçamento maior para labels */
+            margin-bottom: 10px; /* Increased spacing for labels */
             color: #333;
             font-weight: bold;
-            font-size: 0.95em;
+            font-size: 1em; /* Increased label font size */
         }
 
         .form-group input {
-            padding: 12px; /* Padding maior para os inputs */
-            border: 1px solid #ddd; /* Borda mais suave */
-            border-radius: 8px; /* Cantos mais arredondados */
-            font-size: 1em;
-            background-color: #f9f9f9; /* Fundo levemente cinza para inputs */
+            padding: 14px; /* Increased padding for inputs */
+            border: 1px solid #ddd; /* Softer border */
+            border-radius: 8px; /* More rounded corners */
+            font-size: 1.05em; /* Increased input font size */
+            background-color: #f9f9f9; /* Slightly gray background for inputs */
+            color: #555;
+            cursor: default; /* Changes cursor to indicate it's not editable */
         }
 
         .form-group input:focus {
-            border-color: #28a745; /* Borda verde ao focar */
+            border-color: #28a745; /* Green border on focus */
             box-shadow: 0 0 5px rgba(40, 167, 69, 0.2);
             outline: none;
         }
 
-        /* Estilizando os campos específicos da imagem para layout */
+        /* Styling specific fields from the image for layout */
         .nome-group, .email-group, .telefone-group {
             grid-column: 1;
         }
@@ -148,45 +160,31 @@
             grid-column: 2;
         }
 
-        /* Botão Sair na parte superior direita */
-        .logout-button-top {
-            background-color: #dc3545; /* Vermelho para sair */
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.9em;
-            position: absolute; /* Posição absoluta dentro do top-bar */
-            right: 20px; /* Distância da direita */
-            top: 50%; /* Centraliza verticalmente */
-            transform: translateY(-50%); /* Ajusta para centralização perfeita */
-            text-decoration: none; /* Remove sublinhado do link */
-        }
-
-        .logout-button-top:hover {
-            background-color: #c82333;
-        }
-
-        /* Media queries para responsividade */
+        /* Media queries for responsiveness */
         @media (max-width: 768px) {
             .form-grid {
-                grid-template-columns: 1fr; /* Uma coluna em telas menores */
+                grid-template-columns: 1fr; /* One column on smaller screens */
             }
             .nome-group, .email-group, .telefone-group,
             .qtd-group, .empresa-group, .conta-group {
-                grid-column: 1; /* Todos ocupam uma coluna */
+                grid-column: 1; /* All occupy one column */
             }
             .container {
-                width: 95%; /* Mais largura em telas menores */
+                width: 95%; /* More width on smaller screens */
                 padding: 20px;
+                margin-top: 20px;
             }
             .profile-icon-bg {
-                width: 100px;
-                height: 100px;
+                width: 120px; /* Adjusted size for mobile */
+                height: 120px; /* Adjusted size for mobile */
             }
-            .profile-icon {
-                font-size: 3.5em;
+            /* Adjustments for top-bar buttons on mobile */
+            .top-bar {
+                padding: 10px;
+            }
+            .logout-button-top {
+                padding: 8px 15px; /* Adjusted for mobile */
+                font-size: 0.9em; /* Adjusted for mobile */
             }
         }
     </style>
@@ -194,7 +192,9 @@
 <body>
     <div class="top-bar">
         <div class="top-bar-left">
-            <a href="/dashboard">MedCycle</a>
+            <a href="/dashboard">
+                <img src="{{ url_for('static', filename='MedCycle.png') }}" alt="MedCycle Logo">
+            </a>
         </div>
         <div class="top-bar-right">
             <a href="/" class="logout-button-top">Sair</a>
@@ -204,34 +204,35 @@
     <div class="container">
         <div class="profile-header">
             <div class="profile-icon-bg">
-                <i class="fas fa-user profile-icon"></i> </div>
+                <img src="{{ url_for('static', filename='perfil.png') }}" alt="Foto de Perfil" class="profile-image">
+            </div>
             <h2>Seu Perfil</h2>
         </div>
 
         <div class="form-grid">
             <div class="form-group nome-group">
                 <label for="nome">Nome:</label>
-                <input type="text" id="nome" placeholder="Nome do Usuário" value="Nome do Usuário">
+                <input type="text" id="nome" placeholder="Nome do Usuário" value="Nome do Usuário" readonly>
             </div>
             <div class="form-group qtd-group">
                 <label for="qtd_descartado">Qtd (Kg) descartado:</label>
-                <input type="text" id="qtd_descartado" placeholder="0.00 Kg" value="150.75 Kg">
+                <input type="text" id="qtd_descartado" placeholder="0.00 Kg" value="150.75 Kg" readonly>
             </div>
             <div class="form-group email-group">
                 <label for="email">Email:</label>
-                <input type="email" id="email" placeholder="seu.email@exemplo.com" value="usuario@medcycle.com">
+                <input type="email" id="email" placeholder="seu.email@exemplo.com" value="usuario@medcycle.com" readonly>
             </div>
             <div class="form-group empresa-group">
                 <label for="empresa_coletora">Empresa coletora mais utilizada:</label>
-                <input type="text" id="empresa_coletora" placeholder="Nome da Empresa" value="EcoColeta Ltda.">
+                <input type="text" id="empresa_coletora" placeholder="Nome da Empresa" value="EcoColeta Ltda." readonly>
             </div>
             <div class="form-group telefone-group">
                 <label for="telefone">Telefone:</label>
-                <input type="tel" id="telefone" placeholder="(XX) XXXXX-XXXX" value="(11) 98765-4321">
+                <input type="tel" id="telefone" placeholder="(XX) XXXXX-XXXX" value="(11) 98765-4321" readonly>
             </div>
             <div class="form-group conta-group">
                 <label for="conta_criada">Conta criada desde:</label>
-                <input type="text" id="conta_criada" placeholder="DD/MM/AAAA" value="01/01/2023">
+                <input type="text" id="conta_criada" placeholder="DD/MM/AAAA" value="01/01/2023" readonly>
             </div>
         </div>
     </div>
