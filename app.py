@@ -242,6 +242,11 @@ def relatorios():
         empresa=empresa_frequente,
     )
 
+# -------- NOVA ROTA PARA O PERFIL --------
+@app.route("/perfil")
+def perfil():
+    return render_template("perfil.html")
+
 # -------- INICIAR SERVIDOR --------
 if __name__ == "__main__":
     app.run(debug=True)
