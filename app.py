@@ -248,9 +248,15 @@ def perfil():
     return render_template("perfil.html")
 
 # -------- NOVA ROTA PARA FALE CONOSCO --------
-@app.route("/fale_conosco") # A rota agora corresponde ao nome do arquivo com underscore
+@app.route("/fale_conosco")
 def fale_conosco():
-    return render_template("fale_conosco.html") # Renderiza o arquivo com underscore
+    conn, cursor = conectar()
+    cursor.execute("SELECT id, nome FROM residuos")
+    residuos = cursor.fetchall()
+    cursor.execute("SELECT id, nome FROM empresas")
+    empresas = cursor.fetchall()
+    conn.close()
+    return render_template("fale_conosco.html", residuos=residuos, empresas=empresas)
 
 # -------- INICIAR SERVIDOR --------
 if __name__ == "__main__":
