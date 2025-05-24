@@ -9,17 +9,22 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            padding-top: 70px;
-            background-color: #f0f8f5 !important; /* Verde bem claro básico */
+            padding-top: 90px;
+            background-image: url('{{ url_for('static', filename='backquimico(1).png') }}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
             display: flex;
             flex-direction: column;
             align-items: center;
+            color: #333; /* Cor de texto padrão */
         }
 
         .top-bar {
-            background-color: #28a745;
+            background-color: #2e8b57; /* Verde da seção Sobre Nós */
             color: white;
-            padding: 10px 20px;
+            padding: 15px 20px;
             position: fixed;
             top: 0;
             left: 0;
@@ -28,6 +33,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
         .top-bar-left {
@@ -38,7 +44,7 @@
         .top-bar-left a:first-child {
             margin-right: 20px;
             font-weight: bold;
-            font-size: 1.3em;
+            font-size: 1.6em;
             color: white;
             text-decoration: none;
         }
@@ -49,10 +55,11 @@
         }
 
         .profile-icon {
-            width: 30px;
-            height: 30px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             overflow: hidden;
+            border: 1px solid #fff;
         }
 
         .profile-icon img {
@@ -65,85 +72,356 @@
             color: white;
             text-decoration: none;
             margin-left: 15px;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
         }
 
         .top-bar-right a:hover {
             color: #d4edda;
         }
 
+        .dashboard-intro-container {
+            text-align: center;
+            padding: 30px;
+            margin-top: 20px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .dashboard-intro-container h2 {
+            color: #2e8b57; /* Verde da seção Sobre Nós */
+            font-size: 2em;
+            margin-bottom: 20px;
+            background-color: #f8f9fa; /* Fundo claro */
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+
+        .dashboard-options-container {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
         .dashboard-options {
             display: flex;
-            flex-direction: row; /* Alinha os itens horizontalmente */
+            flex-wrap: wrap;
+            gap: 20px;
             justify-content: center;
-            margin-top: 40px;
-            padding: 20px;
+            width: 100%;
         }
 
         .option-card {
-            width: 200px; /* Aumentei a largura */
-            height: 160px;
+            width: 180px;
+            height: 140px;
             background-color: white;
             color: #28a745;
             border-radius: 15px;
-            margin: 15px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             text-decoration: none;
-            font-size: 1.1em; /* Aumentei a fonte */
+            font-size: 1em;
             font-weight: bold;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
-            transition: transform 0.2s ease-in-out;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
             border: 1px solid #e0e0e0;
         }
 
         .option-card:hover {
-            transform: scale(1.05);
+            transform: scale(1.03);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
             background-color: #f8f9fa;
         }
 
         .option-card i {
-            font-size: 3em;
+            font-size: 2.5em;
             margin-bottom: 10px;
         }
 
-        .container {
+        .bottom-info {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            margin-bottom: 40px; /* Aumentei um pouco a margem inferior */
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .bottom-info > div {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .sobre-nos-container {
+            background-color: #2e8b57;
+            color: white;
+            padding: 25px;
+        }
+
+        .sobre-nos-container h2 {
+            color: white;
+            font-size: 1.5em;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .dicas-container {
+            background-color: #fff;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+        }
+
+        .dicas-container h2 {
+            color: #28a745;
+            font-size: 1.5em;
+            margin-top: 0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .dicas-container h2 i {
+            color: #ffc107;
+            margin-right: 10px;
+        }
+
+        .dicas-list {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .dicas-list li {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            border: 1px solid #eee;
+        }
+
+        .dicas-list li i {
+            color: #28a745;
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .voce-sabia-container {
+            background-color: #e9f5e1;
+            padding: 25px;
+        }
+
+        .voce-sabia-container h2 {
+            color: #00838f;
+            font-size: 1.5em;
+            margin-top: 0;
+            margin-bottom: 15px;
             text-align: center;
-            margin-top: 30px;
+        }
+
+        /* --- Seção de Notícias Recentes --- */
+        .recent-news-container {
+            width: 100%;
+            max-width: 1200px;
+            padding: 30px 20px;
+            margin-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .recent-news-title {
+            color: #2e8b57; /* Verde da seção Sobre Nós */
+            font-size: 2em;
+            margin-bottom: 25px;
+            text-align: center;
+            background-color: #f8f9fa; /* Fundo claro */
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
             width: 100%;
         }
 
-        .container h2 {
-            margin-bottom: 30px;
-            color: #343a40;
+        .news-card {
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .news-image-container {
+            width: 100%;
+            height: 180px;
+            overflow: hidden;
+            background-color: #f0f0f0; /* Placeholder para quando a imagem carregar */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .news-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .news-content {
+            padding: 20px;
+        }
+
+        .news-tag {
+            background-color: #f0f0f0;
+            color: #555;
+            border-radius: 8px;
+            padding: 5px 10px;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .news-title {
+            color: #333;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .news-date {
+            color: #777;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+
+        .news-link {
+            display: block;
+            color: #28a745;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .news-link:hover {
+            color: #1e7e34;
         }
     </style>
 </head>
 <body>
     <div class="top-bar">
         <div class="top-bar-left">
-            <a href="/dashboard">MedCycle</a>
+            <a href="/dashboard" style="font-size: 1.6em;">MedCycle</a>
         </div>
         <div class="top-bar-middle">
-            <a href="/perfil" class="profile-icon">
+            <a href="/perfil" class="profile-icon" style="width: 40px; height: 40px;">
                 <img src="{{ url_for('static', filename='perfil.png') }}" alt="Perfil">
             </a>
         </div>
         <div class="top-bar-right">
-            <a href="#">Fale Conosco</a>
-            <a href="/">Sair</a>
+            <a href="/fale_conosco" style="font-size: 1.1em;">Fale Conosco</a>
+            <a href="/" style="font-size: 1.1em;">Sair</a>
         </div>
     </div>
 
-    <div class="container">
+    <div class="dashboard-intro-container">
         <h2>O que você gostaria de fazer?</h2>
+    </div>
+
+    <div class="dashboard-options-container">
         <div class="dashboard-options">
             <a href="/cadastro-residuo" class="option-card"><i class="fas fa-recycle"></i>Resíduos</a>
             <a href="/registro-descarte" class="option-card"><i class="fas fa-trash-alt"></i>Descarte</a>
             <a href="/empresas" class="option-card"><i class="fas fa-building"></i>Empresas</a>
             <a href="/relatorios" class="option-card"><i class="fas fa-chart-bar"></i>Relatórios</a>
+        </div>
+    </div>
+
+    <div class="bottom-info">
+        <div class="sobre-nos-container">
+            <h2>SOBRE NÓS</h2>
+            <p>A MEDCYCLE é um sistema criado por estudantes de Ciência da Computação da Ucdb, com foco na gestão segura e sustentável de resíduos médicos. A plataforma ajuda instituições de saúde a registrar descartes, seguir as normas ambientais e gerar relatórios claros e eficientes, promovendo tecnologia com responsabilidade social.</p>
+        </div>
+
+        <div class="dicas-container">
+            <h2><i class="fas fa-lightbulb"></i> DICAS</h2>
+            <ul class="dicas-list">
+                <li><i class="fas fa-check-circle"></i> Lixo Hospitalar</li>
+                <li><i class="fas fa-check-circle"></i> Descarte Seguro</li>
+                <li><i class="fas fa-check-circle"></i> Selo Verde</li>
+                <li><i class="fas fa-check-circle"></i> Disponibilidade</li>
+            </ul>
+        </div>
+
+        <div class="voce-sabia-container">
+            <h2>VOCÊ SABIA QUE...</h2>
+            <p>Descartar medicamentos usados ou vencidos no lixo comum é extremamente perigoso! Pois os remédios acabam em lixões ou aterros sanitários, assim entrando em contato com bactérias, favorecendo o surgimento de mutações resistentes aos próprios medicamentos, surgindo assim "superbactérias" que não respondem aos tratamentos convencionais, criando novas doenças futuras que podem se tornar uma grande ameaça.</p>
+            <p>É por isso que todas as farmácias têm pontos de coleta para o descarte seguro. Faça a sua parte e descarte corretamente!</p>
+        </div>
+    </div>
+
+    <div class="recent-news-container">
+        <h2 class="recent-news-title">NOTÍCIAS RECENTES</h2>
+        <div class="news-grid">
+            <div class="news-card">
+                <div class="news-image-container">
+                    <img src="{{ url_for('static', filename='noticia1.png') }}" alt="Notícia 1" class="news-image">
+                </div>
+                <div class="news-content">
+                    <span class="news-tag">#news</span>
+                    <h3 class="news-title">Descarte Químico Irregular em Área Residencial</h3>
+                    <p class="news-date">18 de Junho, 2025</p>
+                    <a href="#" class="news-link">VEJA COMPLETO</a>
+                </div>
+            </div>
+            <div class="news-card">
+                <div class="news-image-container">
+                    <img src="{{ url_for('static', filename='noticia2.png') }}" alt="Notícia 2" class="news-image">
+                </div>
+                <div class="news-content">
+                    <span class="news-tag">#trends</span>
+                    <h3 class="news-title">Consequências Invisíveis do Descarte Hospitalar Irregular</h3>
+                    <p class="news-date">10 de novembro, 2025</p>
+                    <a href="#" class="news-link">VEJA COMPLETO</a>
+                </div>
+            </div>
+            <div class="news-card">
+                <div class="news-image-container">
+                    <img src="{{ url_for('static', filename='noticia3.png') }}" alt="Notícia 3" class="news-image">
+                </div>
+                <div class="news-content">
+                    <span class="news-tag">#news</span>
+                    <h3 class="news-title">Equipe Técnica e Área Contaminada por Resíduos Hospitalares</h3>
+                        <p class="news-date">10 de novembro, 2025</p>
+                        <a href="#" class="news-link">VEJA COMPLETO</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

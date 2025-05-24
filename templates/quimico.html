@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>MedCycle - Relatório Químico</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { /* ... (mesmo estilo do body) ... */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-image: url('{{ url_for('static', filename='background.png') }}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .top-bar { /* ... (mesmo estilo da top-bar) ... */
+            background-color: transparent;
+            color: white;
+            padding: 10px 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .top-bar-left a { /* ... (mesmo estilo da top-bar-left a) ... */
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+        }
+
+        .top-bar-left img { /* ... (mesmo estilo da top-bar-left img) ... */
+            height: 90px;
+            width: auto;
+        }
+
+        .container { /* ... (mesmo estilo do container) ... */
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-top: 80px;
+            width: 90%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        h2 {
+            color: #343a40;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-align: center;
+            width: 100%;
+        }
+
+        .chart-container {
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <a href="/dashboard">
+                <img src="{{ url_for('static', filename='MedCycle.png') }}" alt="MedCycle Logo">
+            </a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Relatório de Descarte Químico</h2>
+        <div class="chart-container">
+            <canvas id="quimicoChart"></canvas>
+        </div>
+        <a href="/relatorios" class="btn btn-secondary">Voltar para Relatórios</a>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('quimicoChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Baixo', 'Médio', 'Alto'],
+                datasets: [{
+                    label: 'Peso Descartado (KG)',
+                    data: [7, 11, 15], // Exemplo de dados para químico
+                    backgroundColor: [
+                        'rgba(173, 216, 230, 0.6)',
+                        'rgba(135, 206, 235, 0.8)',
+                        'rgba(70, 130, 180, 1)'
+                    ],
+                    borderColor: [
+                        'rgba(173, 216, 230, 1)',
+                        'rgba(135, 206, 235, 1)',
+                        'rgba(70, 130, 180, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Peso (KG)'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Nível de Descarte'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                    },
+                    title: {
+                        display: false,
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

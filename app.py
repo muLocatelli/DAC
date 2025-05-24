@@ -1,13 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
-import hashlib # Para hash de senhas
+import hashlib  # Para hash de senhas
 
 app = Flask(__name__)
 
 # -------- BANCO DE DADOS --------
 def conectar():
     conn = sqlite3.connect("database.db")
-    conn.row_factory = sqlite3.Row # Permite acessar colunas por nome
+    conn.row_factory = sqlite3.Row  # Permite acessar colunas por nome
     cursor = conn.cursor()
     return conn, cursor
 
@@ -77,13 +77,12 @@ criar_tabelas()
 def hash_senha(senha):
     return hashlib.sha256(senha.encode()).hexdigest()
 
-# -------- ROTA INICIAL (LOGIN) --------
+# -------- ROTAS --------
 @app.route("/")
 def index():
     # Esta é a sua página de login
     return render_template("index.html")
 
-# -------- ROTA DE CADASTRO DE USUÁRIO --------
 @app.route("/cadastro", methods=["GET", "POST"])
 def cadastro_usuario():
     if request.method == "POST":
@@ -122,7 +121,6 @@ def cadastro_usuario():
     # Se for um GET request, apenas renderiza o formulário de cadastro
     return render_template("cadastro.html")
 
-# -------- ROTA DE LOGIN (POST) --------
 @app.route("/login", methods=["POST"])
 def login_post():
     usuario = request.form["usuario"]
@@ -149,7 +147,6 @@ def login_post():
         return render_template("index.html", erro_login="Usuário incorreto")
 
 
-# -------- OUTRAS ROTAS EXISTENTES --------
 @app.route("/dashboard")
 def dashboard():
     return render_template("dashboard.html")
@@ -242,10 +239,43 @@ def relatorios():
         empresa=empresa_frequente,
     )
 
+# -------- ROTAS PARA RELATÓRIOS INDIVIDUALIZADOS --------
+@app.route("/reciclaveis.html")
+def relatorio_reciclaveis():
+    return render_template("reciclaveis.html")
+
+@app.route("/perfurante.html")
+def relatorio_perfurante():
+    return render_template("perfurante.html")
+
+@app.route("/quimico.html")
+def relatorio_quimico():
+    return render_template("quimico.html")
+
+@app.route("/infectante.html")
+def relatorio_infectante():
+    return render_template("infectante.html")
+
 # -------- NOVA ROTA PARA O PERFIL --------
 @app.route("/perfil")
 def perfil():
     return render_template("perfil.html")
+
+# -------- NOVA ROTA PARA FALE CONOSCO --------
+@app.route("/fale_conosco")
+def fale_conosco():
+    conn, cursor = conectar()
+    cursor.execute("SELECT id, nome FROM residuos")
+    residuos = cursor.fetchall()
+    cursor.execute("SELECT id, nome FROM empresas")
+    empresas = cursor.fetchall()
+    conn.close()
+    return render_template("fale_conosco.html", residuos=residuos, empresas=empresas)
+
+# -------- NOVA ROTA PARA CADASTRO DE EMPRESA --------
+@app.route("/cadastro_empresa", methods=["GET"])
+def cadastro_empresa():
+    return render_template("cadastro_empresa.html")
 
 # -------- INICIAR SERVIDOR --------
 if __name__ == "__main__":

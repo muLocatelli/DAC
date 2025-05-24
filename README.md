@@ -1,7 +1,6 @@
 # 🏥 Medcycle
 
-[![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)]()  
-[![Sem Licença](https://img.shields.io/badge/licença-sem--licença-lightgrey)]()
+[![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)]()
 
 Sistema web para **gerenciamento do descarte de resíduos médicos**, promovendo práticas mais seguras em ambientes hospitalares e de saúde.
 
@@ -10,6 +9,25 @@ Sistema web para **gerenciamento do descarte de resíduos médicos**, promovendo
 ## 📌 Descrição
 
 O **Medcycle** permite cadastrar, monitorar e controlar o descarte de resíduos hospitalares, promovendo responsabilidade ambiental e cumprimento de normas de segurança sanitária.
+
+---
+
+## 🧩 Modelo de Dados
+
+O sistema utiliza um banco de dados relacional para gerenciar informações sobre resíduos, empresas, usuários, setores, não conformidades e relatórios agregados. Abaixo está o diagrama do modelo lógico:
+
+![Diagrama do Banco de Dados](diagrama.png)
+
+Principais entidades:
+
+- **residuos**: armazena o tipo e classificação dos resíduos  
+- **descartes**: registra cada ato de descarte de resíduos  
+- **usuarios**: profissionais responsáveis pelos descartes  
+- **empresas** e **empresas_coletoras**: instituições de origem e coleta  
+- **setores**: departamentos hospitalares  
+- **nao_conformidades**: registros de ocorrências irregulares  
+- **relatorios_agregados**: consolidação de dados por risco  
+- **contatos**: sistema de suporte e mensagens  
 
 ---
 
@@ -34,6 +52,7 @@ DAC/
 ├── templates/
 │   ├── index.html
 │   └── login.html
+├── diagrama.png
 └── README.md
 
 
@@ -45,12 +64,10 @@ DAC/
 | Murilo | [@muLocatelli](https://github.com/muLocatelli) |
 | Bianca | [@BiaSabka](https://github.com/BiaSabka)       |
 | David  | [@davidleites](https://github.com/davidleites) |
-
-## ⚖️ Licença
-
-Este projeto ainda não possui uma licença definida.
+|  Mike  | [@MikeWeyller](https://github.com/MikeWeyller) |
 
 Desenvolvido com 💻 por estudantes comprometidos com a saúde e o meio ambiente.
+
 
 ---
 
